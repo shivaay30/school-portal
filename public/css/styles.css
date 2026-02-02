@@ -1,27 +1,173 @@
+/* Rogers School Portal - School-themed styling */
+:root {
+  --school-navy: #1a365d;
+  --school-gold: #d69e2e;
+  --school-blue: #2c5282;
+  --school-light: #ebf8ff;
+  --school-white: #fff;
+  --school-text: #2d3748;
+}
+
 body {
-  background-color: #f5f7fb;
+  background-color: #f0f4f8;
+  color: var(--school-text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* School header / navbar */
+.navbar-school {
+  background: linear-gradient(135deg, var(--school-navy) 0%, var(--school-blue) 100%) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .navbar-brand {
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--school-white) !important;
+}
+
+.navbar-brand img {
+  height: 36px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.btn-school {
+  background-color: var(--school-gold);
+  color: var(--school-navy);
+  border: none;
   font-weight: 600;
 }
 
-.card {
-  border-radius: 0.75rem;
+.btn-school:hover {
+  background-color: #b7791f;
+  color: var(--school-white);
 }
 
+/* Login / Signup pages - school look */
+.school-hero {
+  background: linear-gradient(135deg, var(--school-navy) 0%, var(--school-blue) 100%);
+  color: white;
+  padding: 2rem 1rem;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+}
+
+.school-hero h1 {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.school-hero p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.school-login-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(26, 54, 93, 0.12);
+  overflow: hidden;
+}
+
+.school-login-card .card-body {
+  padding: 1.75rem;
+}
+
+.school-bg-pattern {
+  background-color: #e2e8f0;
+  background-image: url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.school-bg-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 54, 93, 0.4);
+  z-index: 0;
+}
+
+.school-bg-pattern .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cards */
+.card {
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.card-title {
+  color: var(--school-navy);
+  font-weight: 600;
+}
+
+/* Attendance badges */
 .attendance-present {
-  background-color: #d1e7dd;
-  color: #0f5132;
+  background-color: #c6f6d5;
+  color: #22543d;
 }
 
 .attendance-absent {
-  background-color: #f8d7da;
-  color: #842029;
+  background-color: #fed7d7;
+  color: #742a2a;
 }
 
 .attendance-late {
-  background-color: #fff3cd;
-  color: #664d03;
+  background-color: #feebc8;
+  color: #744210;
 }
 
+/* Footer */
+.school-footer {
+  background: var(--school-navy);
+  color: rgba(255,255,255,0.85);
+  padding: 1rem;
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Dashboard welcome */
+.dashboard-welcome {
+  background: linear-gradient(135deg, var(--school-light) 0%, #bee3f8 100%);
+  border-left: 4px solid var(--school-gold);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+/* Form controls - school style */
+.form-control:focus, .form-select:focus {
+  border-color: var(--school-blue);
+  box-shadow: 0 0 0 0.2rem rgba(44, 82, 130, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--school-blue);
+  border-color: var(--school-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--school-navy);
+  border-color: var(--school-navy);
+}
+
+a {
+  color: var(--school-blue);
+}
+
+a:hover {
+  color: var(--school-navy);
+}

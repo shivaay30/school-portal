@@ -6,8 +6,9 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 
-const { initDb, getUserByEmail, getDashboardData, createUser } = require('./src/db');
+const { initDb, getUserByEmail, getDashboardData, createUser, getNumberOfUsers } = require('./src/db');
 const { comparePassword, hashPassword } = require('./src/utils/auth');
+const { seed } = require('./seed');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -178,7 +179,21 @@ app.get('/dashboard', ensureAuthenticated, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`School portal running on http://localhost:${PORT}`);
-});
+// Auto-seed when no users (so admin works on Render after deploy)
+async function start() {
+  try {
+    const count = await getNumberOfUsers();
+    if (count === 0) {
+      console.log('No users found — seeding database...');
+      await seed();
+    }
+  } catch (err) {
+    console.error('Startup seed check failed:', err);
+  }
+  app.listen(PORT, () => {
+    console.log(`Rogers School portal running on http://localhost:${PORT}`);
+  });
+}
+
+start();
 

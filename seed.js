@@ -11,7 +11,7 @@ async function seed() {
   const passwordStudent = await hashPassword('password123');
   const passwordParent = await hashPassword('password123');
   const passwordTeacher = await hashPassword('password123');
-  const passwordAdmin = await hashPassword('admin123');
+  const passwordAdmin = await hashPassword('Admin@School123');
 
   db.serialize(() => {
     // Clear existing data
@@ -53,7 +53,7 @@ async function seed() {
         // Admin user (manages everything)
         db.run(
           'INSERT INTO users (name, email, password_hash, role, student_id) VALUES (?, ?, ?, ?, NULL)',
-          ['Super Admin', 'admin@school.com', passwordAdmin, 'admin']
+          ['Rogers School Admin', 'admin@school.com', passwordAdmin, 'admin']
         );
 
         // Results
@@ -106,7 +106,11 @@ async function seed() {
   console.log('Database seeded successfully.');
 }
 
-seed().catch(err => {
-  console.error('Seeding error:', err);
-});
+if (require.main === module) {
+  seed().catch(err => {
+    console.error('Seeding error:', err);
+  });
+}
+
+module.exports = { seed };
 

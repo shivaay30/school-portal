@@ -13,19 +13,25 @@
     <link rel="stylesheet" href="/public/css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-school">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/dashboard">School Portal</a>
+        <a class="navbar-brand" href="/dashboard">
+          <img src="https://images.unsplash.com/photo-1580582932707-520b0b3d2f7d?w=40&h=40&fit=crop" alt="Rogers School" />
+          Rogers School
+        </a>
         <div class="d-flex align-items-center">
-          <span class="navbar-text me-3">
-            <%= user.name %> (<%= user.role %>)
+          <span class="navbar-text me-3 text-white">
+            <%= user.name %> — <%= user.role %>
           </span>
-          <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+          <a href="/logout" class="btn btn-school btn-sm">Logout</a>
         </div>
       </div>
     </nav>
 
     <main class="container my-4">
+      <div class="dashboard-welcome">
+        <strong>Welcome, <%= user.name %>.</strong> View your dashboard below.
+      </div>
       <% if (user.role === 'student' || user.role === 'parent') { %>
       <div class="row mb-4">
         <div class="col-md-4">
@@ -225,8 +231,151 @@
         </div>
       </div>
 
+      <% } else if (user.role === 'admin') { %>
+      <div class="row g-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-3">All Users</h5>
+              <% if (data.users && data.users.length) { %>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Student ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% data.users.forEach(u => { %>
+                    <tr>
+                      <td><%= u.name %></td>
+                      <td><%= u.email %></td>
+                      <td><span class="badge bg-primary"><%= u.role %></span></td>
+                      <td><%= u.student_id || '—' %></td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <p class="text-muted mb-0">No users yet.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Students</h5>
+              <% if (data.students && data.students.length) { %>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr><th>Name</th><th>Class</th></tr>
+                  </thead>
+                  <tbody>
+                    <% data.students.forEach(s => { %>
+                    <tr><td><%= s.name %></td><td><%= s.class %></td></tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <p class="text-muted mb-0">No students.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Results</h5>
+              <% if (data.results && data.results.length) { %>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr><th>Student</th><th>Subject</th><th>Score</th><th>Term</th></tr>
+                  </thead>
+                  <tbody>
+                    <% data.results.forEach(r => { %>
+                    <tr>
+                      <td><%= r.student_name %></td>
+                      <td><%= r.subject %></td>
+                      <td><%= r.score %> / <%= r.max_score %></td>
+                      <td><%= r.term %></td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <p class="text-muted mb-0">No results.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Attendance</h5>
+              <% if (data.attendance && data.attendance.length) { %>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr><th>Student</th><th>Date</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <% data.attendance.forEach(a => { %>
+                    <tr>
+                      <td><%= a.student_name %></td>
+                      <td><%= a.date %></td>
+                      <td><span class="badge attendance-<%= a.status.toLowerCase() %>"><%= a.status %></span></td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <p class="text-muted mb-0">No attendance records.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Homework</h5>
+              <% if (data.homework && data.homework.length) { %>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr><th>Class</th><th>Subject</th><th>Title</th><th>Due Date</th></tr>
+                  </thead>
+                  <tbody>
+                    <% data.homework.forEach(h => { %>
+                    <tr>
+                      <td><%= h.class %></td>
+                      <td><%= h.subject %></td>
+                      <td><%= h.title %></td>
+                      <td><%= h.due_date %></td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <p class="text-muted mb-0">No homework.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
       <% } %>
     </main>
+    <footer class="school-footer">Rogers School Portal — Students, Teachers & Parents</footer>
   </body>
 </html>
 

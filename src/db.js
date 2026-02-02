@@ -92,6 +92,17 @@ function getUserByEmail(email) {
   });
 }
 
+function getNumberOfUsers() {
+  const db = getDb();
+  return new Promise((resolve, reject) => {
+    db.get('SELECT COUNT(*) AS count FROM users', [], (err, row) => {
+      db.close();
+      if (err) return reject(err);
+      resolve(row ? row.count : 0);
+    });
+  });
+}
+
 function createUser({ name, email, passwordHash, role, student_id }) {
   const db = getDb();
   return new Promise((resolve, reject) => {
@@ -313,6 +324,7 @@ module.exports = {
   getUserByEmail,
   getDashboardData,
   createUser,
+  getNumberOfUsers,
   DB_PATH
 };
 
