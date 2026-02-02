@@ -26,6 +26,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "session-file-store": "^1.2.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

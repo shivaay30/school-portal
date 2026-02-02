@@ -1,7 +1,19 @@
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 const sqlite3 = require('sqlite3').verbose();
 
-const DB_PATH = path.join(__dirname, 'data', 'school.db');
+// On Render the project filesystem is read-only; use /tmp (writable but ephemeral)
+const isRender = process.env.RENDER === 'true';
+const dataBaseDir = isRender
+  ? path.join(os.tmpdir(), 'school-portal')
+  : path.join(__dirname, 'data');
+const DB_PATH = path.join(dataBaseDir, 'school.db');
+
+// Ensure data directory exists
+if (!fs.existsSync(dataBaseDir)) {
+  fs.mkdirSync(dataBaseDir, { recursive: true });
+}
 
 function getDb() {
   return new sqlite3.Database(DB_PATH);
@@ -300,6 +312,7 @@ module.exports = {
   initDb,
   getUserByEmail,
   getDashboardData,
-  createUser
+  createUser,
+  DB_PATH
 };
 

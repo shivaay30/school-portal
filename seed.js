@@ -1,9 +1,6 @@
-const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const { hashPassword } = require('./src/utils/auth');
-const { initDb } = require('./src/db');
-
-const DB_PATH = path.join(__dirname, 'src', 'data', 'school.db');
+const { initDb, DB_PATH } = require('./src/db');
 
 async function seed() {
   // Ensure tables exist before seeding

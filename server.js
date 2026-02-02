@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 
 const { initDb, getUserByEmail, getDashboardData, createUser } = require('./src/db');
@@ -12,6 +15,13 @@ const PORT = process.env.PORT || 3000;
 // Initialize database
 initDb();
 
+// Session store directory (on Render use /tmp; project dir can be read-only)
+const isRender = process.env.RENDER === 'true';
+const sessionDir = isRender
+  ? path.join(os.tmpdir(), 'school-portal', 'sessions')
+  : path.join(__dirname, 'data', 'sessions');
+fs.mkdirSync(sessionDir, { recursive: true });
+
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
@@ -22,10 +32,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 // Body parsing
 app.use(express.urlencoded({ extended: true }));
 
-// Sessions
+// Sessions (file store for production; no memory leak warning)
 app.use(
   session({
-    secret: 'school-portal-secret',
+    store: new FileStore({ path: sessionDir }),
+    secret: process.env.SESSION_SECRET || 'school-portal-secret',
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 } // 1 hour

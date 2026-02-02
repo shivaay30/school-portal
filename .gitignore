@@ -1,6 +1,7 @@
 node_modules/
 src/data/*.db
 src/data/*.db-journal
+data/
 .env
 *.log
 .DS_Store
