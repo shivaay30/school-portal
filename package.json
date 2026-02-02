@@ -1,0 +1,34 @@
+{
+  "name": "school-portal",
+  "version": "1.0.0",
+  "description": "School portal website for students, teachers, and parents with results, attendance, and homework views.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [
+    "school",
+    "portal",
+    "students",
+    "teachers",
+    "parents",
+    "attendance",
+    "results",
+    "homework"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

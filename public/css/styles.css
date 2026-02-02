@@ -1,0 +1,27 @@
+body {
+  background-color: #f5f7fb;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.card {
+  border-radius: 0.75rem;
+}
+
+.attendance-present {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.attendance-absent {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.attendance-late {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
